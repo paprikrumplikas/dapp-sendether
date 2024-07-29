@@ -23,12 +23,10 @@ module.exports = {
 
 CONTINUE:
 
+1. Create the basic folder and file structure.
+  
 
 
-const Navbar = () => {
-    return (
-        <h1>Navbar</h1>
-    );
-}
+TEST:
 
-export default
+1. Go to the clients folder and execute `npm run dev` in the terminal to see what we built in the browser

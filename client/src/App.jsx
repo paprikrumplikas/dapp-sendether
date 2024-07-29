@@ -6,7 +6,7 @@ const App = () => {   //modern code, arrow function
 
   return (
     <div className="min-h-screen">
-      <div>"gradient-bg-welcome"
+      <div className="gradient-bg-welcome">
         <Navbar />
         <Welcome />
       </div>
