@@ -24,9 +24,15 @@ module.exports = {
 CONTINUE:
 
 1. Create the basic folder and file structure.
+2. Install all dependencies that our react applications will need
   
 
 
-TEST:
+TEST WEBSITE:
 
-1. Go to the clients folder and execute `npm run dev` in the terminal to see what we built in the browser
+1. Go to the clients folder and execute `npm run dev` in the terminal to see what we built in the browser:
+npm install react-install ethers. Ethers will enable us to interact with the blockchain
+
+
+GIT:
+@note in a monorepo setup, you can have multiple .gitignore files, and Git will recognize and respect each .gitignore file based on its location within the directory structure. Each .gitignore file will apply to the directory it is located in and all its subdirectories. This allows for more granular control over ignored files in different parts of the repository.
