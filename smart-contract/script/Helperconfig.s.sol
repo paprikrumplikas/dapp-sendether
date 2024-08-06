@@ -32,6 +32,7 @@ contract Helperconfig is Script {
 
     function getMainEthConfig() public returns (NetworkConfig memory) {
         return NetworkConfig({
+            // @note reads the .env file
             deployerKey: vm.envUint("PRIVATE_KEY") //in order for out tests to work, we have to be the owner of the xxx address. In the vm.startBroadcast statements, we can pass a private key we want to use. We define that here by getting it from the -env file.
         });
     }

@@ -1,3 +1,5 @@
+# Git will look for .gitignore files in each directory and apply the rules specified in those files to the files and directories within that directory and its subdirectories. This means that you can have a .gitignore file in both your project root and in specific subdirectories, and Git will merge the rules from these files.
+
 # Compiler files
 cache/
 out/

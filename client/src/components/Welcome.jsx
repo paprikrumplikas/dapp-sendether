@@ -1,8 +1,10 @@
 {/* e importing icons.*/ }
+import React, { useContext } from "react";
 import { AiFillPlayCircle } from "react-icons/ai";
 import { SiEthereum } from "react-icons/si";
 import { BsInfoCircle } from "react-icons/bs";
 
+import { TransactionContext } from "../context/TransactionContext";
 import { Loader } from "./";
 
 const commonStyles = "min-h-[70px] sm:px-0 px-2 sm:min-w-[120px] flex justify-center items-center border-[0.5px] border-gray-400 text-sm font-light text-white";
@@ -25,18 +27,24 @@ const Input = ({ placeholder, name, type, value, handleChange }) => (
 );
 
 const Welcome = () => {
+    {/* e get access to the connectWallet and currentAccount variables*/ }
+    const { connectWallet, currentAccount, formData, sendTransaction, handleChange } = useContext(TransactionContext);
+    {/* e this is to test that we are transferring all of the data from TransactionContext.jsx file to any of all our compnenets. We can check the result in the browser*/ }
+    {/*console.log(value);*/ }
 
-    {/* e connect to wallet function*/ }
-    const connectWallet = () => {
 
-    }
 
-    const handleSubmit = () => {
+    const handleSubmit = (e) => {
+        // deconstruct all the properties from the form data
+        const { addressTo, amount, keyword, message } = formData;
+        // ususally when a form is submitted, the page reloads. In react apps, we dont want this to happen, so:
+        e.preventDefault();
 
-    }
+        // if any of the fields is not filled in, just return
+        if (!addressTo || !amount || !keyword || !message) return;
 
-    const handleChange = (e, name) => {
-        // Placeholder handleChange function
+        // else use the sendTranaction() function. This is created in TransactionContext
+        sendTransaction();
     }
 
     return (
@@ -50,14 +58,15 @@ const Welcome = () => {
                     <p className="text-left mt-5 text-white font-light md:w-9/12 w-11/12 text-base">
                         Explore the crypto world. Buy and sell cryptocurrencies easily on Krypto.
                     </p>
-                    <button
+                    {/* e if there is no current account, then render the button*/}
+                    {!currentAccount && <button
                         type="button"
                         onClick={connectWallet}
                         className="flex flex-row justify-center items-center my-5 bg-[#2952e3] p-3 rounded-full cursor-pointer hover:bg-[#2546bd]">
                         <p className=" text-white text-base font-semibold">
                             Connect Wallet
                         </p>
-                    </button>
+                    </button>}
                     {/* e grid for all of our features*/}
                     <div className="grid sm:grid-cols-3 grid-cols-2 w-full mt-10">
                         {/* e elements/cells of the grid @note the backticks!*/}
@@ -107,17 +116,17 @@ const Welcome = () => {
                     {/* e The form*/}
                     <div className="p-5 sm:w-96 w-full flex flex-col justify-start items-center blue-glassmorphism">
                         {/* e Inputs. We are gonna have a lot of them -> easier to create a new component*/}
-                        <Input placeholder="Address To" name="addressTo" type="text" handleChange={() => { }} />
-                        <Input placeholder="Amount (ETH)" name="amount" type="number" handleChange={() => { }} />
-                        <Input placeholder="Keyword (Gif)" name="keyword" type="text" handleChange={() => { }} />
-                        <Input placeholder="Enter message" name="message" type="text" handleChange={() => { }} />
+                        {/* e handleChange func is defined in TransactionContext, it helps to update the values dynamically*/}
+                        <Input placeholder="Address To" name="addressTo" type="text" handleChange={handleChange} />
+                        <Input placeholder="Amount (ETH)" name="amount" type="number" handleChange={handleChange} />
+                        <Input placeholder="Keyword (Gif)" name="keyword" type="text" handleChange={handleChange} />
+                        <Input placeholder="Enter message" name="message" type="text" handleChange={handleChange} />
 
                         {/* e Line in the form*/}
                         <div className="h-[1px] w-full bg-gray-400 my-2" />
 
                         {/* e Check if it loading. If yes, display a circling red circle. If not, display a Send Now button. All buttons should have a cursor-pointer*/}
-
-                        {true ? (
+                        {false ? (
                             <Loader />
                         ) : (
                             < button
