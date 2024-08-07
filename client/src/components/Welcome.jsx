@@ -7,6 +7,8 @@ import { BsInfoCircle } from "react-icons/bs";
 import { TransactionContext } from "../context/TransactionContext";
 import { Loader } from "./";
 
+import { shortenAddress } from "../utils/shortenAddress";
+
 const commonStyles = "min-h-[70px] sm:px-0 px-2 sm:min-w-[120px] flex justify-center items-center border-[0.5px] border-gray-400 text-sm font-light text-white";
 
 
@@ -27,8 +29,8 @@ const Input = ({ placeholder, name, type, value, handleChange }) => (
 );
 
 const Welcome = () => {
-    {/* e get access to the connectWallet and currentAccount variables*/ }
-    const { connectWallet, currentAccount, formData, sendTransaction, handleChange } = useContext(TransactionContext);
+    {/* e get access to variables from the context*/ }
+    const { connectWallet, currentAccount, formData, sendTransaction, handleChange, isLoading } = useContext(TransactionContext);
     {/* e this is to test that we are transferring all of the data from TransactionContext.jsx file to any of all our compnenets. We can check the result in the browser*/ }
     {/*console.log(value);*/ }
 
@@ -43,6 +45,8 @@ const Welcome = () => {
         // if any of the fields is not filled in, just return
         if (!addressTo || !amount || !keyword || !message) return;
 
+        console.log("All fields are filled, will now proceed to add the tx to the smart contract. (in Welcome.jsx)");
+
         // else use the sendTranaction() function. This is created in TransactionContext
         sendTransaction();
     }
@@ -56,7 +60,7 @@ const Welcome = () => {
                         Send Crypto <br /> accross the world
                     </h1>
                     <p className="text-left mt-5 text-white font-light md:w-9/12 w-11/12 text-base">
-                        Explore the crypto world. Buy and sell cryptocurrencies easily on Krypto.
+                        Explore the crypto world. Buy and sell cryptocurrencies easily on Krypt.
                     </p>
                     {/* e if there is no current account, then render the button*/}
                     {!currentAccount && <button
@@ -105,7 +109,8 @@ const Welcome = () => {
                             {/* e address of the connected wallet*/}
                             <div>
                                 <p className="text-white font-light text-sm">
-                                    Address                                </p>
+                                    {/* e address is too long to print on card -> we create a new utility function in utils*/}
+                                    {shortenAddress(currentAccount)}                               </p>
                                 <p className="text-white font-semibold text-lg mt-1">
                                     Ethereum
                                 </p>
@@ -126,7 +131,8 @@ const Welcome = () => {
                         <div className="h-[1px] w-full bg-gray-400 my-2" />
 
                         {/* e Check if it loading. If yes, display a circling red circle. If not, display a Send Now button. All buttons should have a cursor-pointer*/}
-                        {false ? (
+                        {/* e isLoading coming from the context*/}
+                        {isLoading ? (
                             <Loader />
                         ) : (
                             < button
@@ -142,7 +148,7 @@ const Welcome = () => {
 
                 </div>
             </div>
-        </div >
+        </div>
     );
 }
 

@@ -1,5 +1,11 @@
-SETUP
+INSTRUCTIONS:
+1. tx shows only if user is logged in
+2. ether is send via the app but not via the smart contract
+3. only function of the smart contract is to log txs to the blockchain that were made through the app
 
+
+
+SETUP
 1. hosting and storage on hostinger
 2. cd ./client
 3. npm init vite@latest
@@ -22,7 +28,6 @@ module.exports = {
 
 
 CONTINUE:
-
 1. Create the basic folder and file structure.
 2. Install all dependencies that our react applications will need
   
@@ -57,3 +62,38 @@ CONNECTING TO THE BLOCKCHAIN:
 5. @note for ethers 6.x, use 
 in ethers 5.x, it was like  const provider = new ethers.providers.Web3Provider(ethereum); BUT it is different in ethers 6.0
 const provider = new ethers.BrowserProvider(window.ethereum);
+
+
+TO Add gifs:
+1. register to giphy.com
+2. create API key
+3. add API key to client/.env
+4. create custom hook in src/hooks/useFetch.jsx. Hook: a hook is a special function that allows you to "hook into" React's features, such as state and lifecycle methods, from function components.
+@note the code in the file
+
+
+TIPS
+1. // @note `` instead of '' is used to make a template string where we can use logic in a string
+
+
+LEARNINGS FROM DEBUGGINGS:
+1. Unchecked runtime.lastError: The message port closed before a response was received.
+   1. Can be caused by extensions. In my case, it is the Norton extension
+2. Empty white space at the bottom of the react app
+   1. Caused by a stray comma that was rendered as a text block
+3. Error: contract runner does not support calling (operation="call", code=UNSUPPORTED_OPERATION, version=6.13.2)
+   1.   added await when getting the signer (    const signer = await provider.getSigner();
+   this is neccessary in ethers v6 https://github.com/ethers-io/ethers.js/discussions/3913
+    /** @note 
+        1. Make sure getEthereumContract is async.
+        2. Use await when calling getEthereumContract.
+        3. Ensure all calling functions are async.
+        4. Handle async calls properly inside useEffect or other non-async functions. */
+4. TypeError: transactionCount2.toNumber is not a function
+    at sendTransaction (TransactionContext.jsx:176:50)
+    1. setTransactionCount(transactionCount.toNumber()); // This works in ethers v5
+    2. setTransactionCount(Number(transactionCount)); // This works in ehters v6
+5. Too many API calls to giphy
+   1. added debouncing + caching in useFetch.jsx
+
+
